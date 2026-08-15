@@ -1,7 +1,8 @@
-require('dotenv').config(); // Lê o arquivo .env com a sua senha secreta
-const mongoose = require('mongoose');
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
+const session = require('express-session'); // NOVA FERRAMENTA DE SESSÃO
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,62 +12,87 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // ==========================================
+// CONFIGURAÇÃO DA SESSÃO (O "Crachá")
+// ==========================================
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'segredo_padrao',
+    resave: false,
+    saveUninitialized: false
+}));
+
+// FUNÇÃO DE SEGURANÇA (O "Segurança da Porta")
+function verificarLogin(req, res, next) {
+    if (req.session.logado) {
+        next(); // Tem crachá? Pode passar!
+    } else {
+        res.status(401).json({ erro: "Acesso negado!" }); // Sem crachá? Bloqueado!
+    }
+}
+
+// ==========================================
 // CONEXÃO COM O MONGODB NA NUVEM
 // ==========================================
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Banco de dados MONGODB na nuvem conectado! 🚀"))
+  .then(() => console.log("Banco de dados MONGODB conectado! 🚀"))
   .catch((err) => console.error("Erro ao conectar no banco:", err));
 
-// ==========================================
-// ESTRUTURA DO POST (O "Molde")
-// ==========================================
 const postSchema = new mongoose.Schema({
     titulo: String,
     conteudo: String,
     data_criacao: { type: Date, default: Date.now }
 });
-
-// Cria a coleção no banco baseada no molde acima
 const Post = mongoose.model('Post', postSchema);
 
 // ==========================================
-// ROTAS DA API
+// ROTAS DE LOGIN E ADMIN
 // ==========================================
 
-// 1. CRIAR
-app.post('/api/posts', async (req, res) => {
+// Rota que verifica a senha digitada no login.html
+app.post('/api/login', (req, res) => {
+    if (req.body.senha === process.env.ADMIN_PASSWORD) {
+        req.session.logado = true; // Entrega o crachá
+        res.json({ sucesso: true });
+    } else {
+        res.status(401).json({ erro: "Senha incorreta" });
+    }
+});
+
+// Rota que entrega a tela de admin SOMENTE para quem tem o crachá
+app.get('/admin', (req, res) => {
+    if (req.session.logado) {
+        res.sendFile(path.join(__dirname, 'private', 'admin.html'));
+    } else {
+        res.redirect('/login.html'); // Se não tiver logado, manda pra tela de login
+    }
+});
+
+// ==========================================
+// ROTAS DA API DE POSTS
+// ==========================================
+
+// 1. CRIAR (Protegido pelo segurança 'verificarLogin')
+app.post('/api/posts', verificarLogin, async (req, res) => {
     try {
-        const novoPost = await Post.create({
-            titulo: req.body.titulo,
-            conteudo: req.body.conteudo
-        });
+        const novoPost = await Post.create({ titulo: req.body.titulo, conteudo: req.body.conteudo });
         res.json({ mensagem: "Post criado com sucesso!", id: novoPost._id });
     } catch (err) {
         res.status(500).json({ erro: err.message });
     }
 });
 
-// 2. LER
+// 2. LER (Aberto para o público, para aparecer no site)
 app.get('/api/posts', async (req, res) => {
     try {
-        // Busca todos e ordena do mais novo pro mais velho
         const posts = await Post.find().sort({ data_criacao: -1 });
-        
-        // Ajustamos para o frontend entender (o Mongo usa "_id" com sublinhado)
-        const postsFormatados = posts.map(p => ({
-            id: p._id,
-            titulo: p.titulo,
-            conteudo: p.conteudo
-        }));
-        
+        const postsFormatados = posts.map(p => ({ id: p._id, titulo: p.titulo, conteudo: p.conteudo }));
         res.json(postsFormatados);
     } catch (err) {
         res.status(500).json({ erro: err.message });
     }
 });
 
-// 3. DELETAR
-app.delete('/api/posts/:id', async (req, res) => {
+// 3. DELETAR (Protegido pelo segurança 'verificarLogin')
+app.delete('/api/posts/:id', verificarLogin, async (req, res) => {
     try {
         await Post.findByIdAndDelete(req.params.id);
         res.json({ mensagem: "Post deletado com sucesso!" });

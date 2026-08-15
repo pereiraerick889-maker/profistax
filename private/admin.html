@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Admin - Blog PROFIS</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f6f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+        input, textarea { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; }
+        button { background: #030C38; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        button:hover { background: #DFA100; color: #030C38; }
+        .post-item { border-bottom: 1px solid #ddd; padding: 15px 0; display: flex; justify-content: space-between;}
+        .btn-delete { background: red; color: white; border-radius: 4px; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Criar Nova Postagem no Blog</h2>
+    
+    <form id="formBlog">
+        <label>Título do Post:</label>
+        <input type="text" id="titulo" required placeholder="Ex: Novas regras do Simples Nacional">
+        
+        <label>Conteúdo:</label>
+        <textarea id="conteudo" rows="6" required placeholder="Escreva o texto do blog aqui..."></textarea>
+        
+        <button type="submit">Publicar Post</button>
+    </form>
+
+    <h2 style="margin-top: 40px;">Postagens Publicadas</h2>
+    <div id="listaPosts">
+        <!-- Os posts aparecerão aqui -->
+    </div>
+</div>
+
+<script>
+    // Função para carregar os posts na tela
+    async function carregarPosts() {
+        const resposta = await fetch('/api/posts');
+        const posts = await resposta.json();
+        
+        const divLista = document.getElementById('listaPosts');
+        divLista.innerHTML = ''; // Limpa a lista antes de atualizar
+
+        posts.forEach(post => {
+            divLista.innerHTML += `
+                <div class="post-item">
+                    <div>
+                        <strong>${post.titulo}</strong>
+                        <p style="font-size: 14px; color: #666;">${post.conteudo}</p>
+                    </div>
+                    <button class="btn-delete" onclick="deletarPost(${post.id})">Deletar</button>
+                </div>
+            `;
+        });
+    }
+
+    // Função para criar um novo post
+    document.getElementById('formBlog').addEventListener('submit', async (evento) => {
+        evento.preventDefault(); // Evita que a página recarregue
+        
+        const titulo = document.getElementById('titulo').value;
+        const conteudo = document.getElementById('conteudo').value;
+
+        await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ titulo: titulo, conteudo: conteudo })
+        });
+
+        document.getElementById('formBlog').reset(); // Limpa o formulário
+        carregarPosts(); // Atualiza a lista
+        alert('Postado com sucesso!');
+    });
+
+    // Função para deletar um post
+    async function deletarPost(id) {
+        if(confirm("Tem certeza que deseja deletar este post?")) {
+            await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+            carregarPosts(); // Atualiza a lista
+        }
+    }
+
+    // Carrega os posts assim que a página abre
+    // Função para carregar os posts na tela
+    async function carregarPosts() {
+        const resposta = await fetch('/api/posts');
+        const posts = await resposta.json();
+        
+        const divLista = document.getElementById('listaPosts');
+        divLista.innerHTML = ''; // Limpa a lista antes de atualizar
+
+        posts.forEach(post => {
+            divLista.innerHTML += `
+                <div class="post-item">
+                    <div>
+                        <strong>${post.titulo}</strong>
+                        <p style="font-size: 14px; color: #666;">${post.conteudo}</p>
+                    </div>
+                    <!-- A CORREÇÃO ESTÁ AQUI: aspas simples ao redor do ${post.id} -->
+                    <button class="btn-delete" onclick="deletarPost('${post.id}')">Deletar</button>
+                </div>
+            `;
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Admin PROFIS</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        input { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; }
+        button { width: 100%; background: #030C38; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 4px;}
+        button:hover { background: #DFA100; color: #030C38; }
+        #mensagem { color: red; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Acesso Restrito</h2>
+    <form id="formLogin">
+        <input type="password" id="senha" placeholder="Digite sua senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+    <div id="mensagem"></div>
+</div>
+
+<script>
+    document.getElementById('formLogin').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const senha = document.getElementById('senha').value;
+        
+        const resposta = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ senha: senha })
+        });
+        
+        if (resposta.ok) {
+            window.location.href = '/admin'; // Se a senha estiver certa, vai pro painel
+        } else {
+            document.getElementById('mensagem').innerText = 'Senha incorreta!';
+        }
+    });
+</script>
+
+</body>
+</html>

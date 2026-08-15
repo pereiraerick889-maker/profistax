@@ -731,6 +731,21 @@
         </div>
     </section>
 
+    <!-- SEÇÃO DO BLOG -->
+    <section class="services" id="blog">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">ARTIGOS E NOTÍCIAS</span>
+                <h2 class="section-title">Acompanhe nosso Blog</h2>
+            </div>
+
+            <!-- É aqui dentro que o JavaScript vai injetar os posts -->
+            <div class="services-grid" id="lista-blog-publico">
+                <p style="text-align: center; width: 100%; grid-column: 1 / -1;">Carregando artigos...</p>
+            </div>
+        </div>
+    </section>
+
     <!-- RODAPÉ -->
     <footer class="footer" id="contato">
         <div class="container">
@@ -772,6 +787,45 @@
     <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20gratuito%20de%20recupera%C3%A7%C3%A3o%20de%20cr%C3%A9ditos." target="_blank" class="whatsapp-btn" title="Fale conosco pelo WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- SCRIPT PARA CARREGAR O BLOG -->
+    <script>
+        async function carregarBlogPublico() {
+            try {
+                // Pede os posts para o nosso servidor
+                const resposta = await fetch('/api/posts');
+                const posts = await resposta.json();
+                
+                const container = document.getElementById('lista-blog-publico');
+                
+                // Se não tiver nenhum post, avisa na tela
+                if (posts.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; width: 100%; grid-column: 1 / -1;">Nenhum artigo publicado ainda.</p>';
+                    return;
+                }
+
+                // Limpa o "Carregando..."
+                container.innerHTML = '';
+
+                // Desenha cada post usando o mesmo visual dos seus "cards" de serviços
+                posts.forEach(post => {
+                    container.innerHTML += `
+                        <div class="service-card">
+                            <h3 class="service-title">${post.titulo}</h3>
+                            <p class="service-desc" style="white-space: pre-wrap;">${post.conteudo}</p>
+                        </div>
+                    `;
+                });
+            } catch (erro) {
+                console.error("Erro ao carregar o blog:", erro);
+                document.getElementById('lista-blog-publico').innerHTML = 
+                    '<p style="text-align: center; width: 100%; grid-column: 1 / -1; color: red;">Erro ao carregar os artigos. Tente novamente mais tarde.</p>';
+            }
+        }
+
+        // Executa a função assim que o site abre
+        carregarBlogPublico();
+    </script>
 
 </body>
 </html>
