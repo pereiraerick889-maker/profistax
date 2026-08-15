@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/jpeg" href="profislogo.jpeg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFIS | Proteção Fiscal & Engenharia Tributária</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. VARIÁVEIS DE CORES E RESET
+           ========================================================================== */
+        :root {
+            --navy-primary: #030C38;
+            --navy-dark: #01061C;
+            --gold-primary: #DFA100;
+            --gold-hover: #B88500;
+            --text-dark: #1E2025;
+            --text-light: #F8F9FA;
+            --bg-light: #F4F6F9;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================================================
+           2. CABEÇALHO (NAVBAR)
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            max-height: 45px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--navy-primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--gold-primary);
+        }
+
+        .btn-cta {
+            background-color: var(--gold-primary);
+            color: var(--navy-primary);
+            font-weight: 800;
+            font-size: 14px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(223, 161, 0, 0.3);
+        }
+
+        /* ==========================================================================
+           3. HERO SECTION (DOBRA PRINCIPAL)
+           ========================================================================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 100px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(1, 6, 28, 0.75), rgba(3, 12, 56, 0.85)), 
+                        url('PROFIS (11).png') center/cover no-repeat;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .hero-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            overflow: hidden;
+        }
+
+        .hero-badge-block {
+            background-color: var(--navy-primary);
+            padding: 50px 40px;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            border-right: 5px solid var(--gold-primary);
+        }
+
+        .hero-badge-tag {
+            background-color: var(--gold-primary);
+            color: var(--navy-primary);
+            font-weight: 800;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .hero-badge-title {
+            font-size: 26px;
+            line-height: 1.3;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .hero-content-block {
+            padding: 50px 45px;
+            background-color: var(--white);
+        }
+
+        .hero-h1 {
+            font-size: 28px;
+            color: var(--navy-primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            color: var(--gold-primary);
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            text-transform: none;
+        }
+
+        .hero-description {
+            color: var(--text-dark);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .hero-checklist {
+            margin-bottom: 30px;
+        }
+
+        .hero-checklist li {
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #4A5568;
+        }
+
+        .hero-checklist i {
+            color: var(--gold-primary);
+            font-size: 16px;
+            margin-top: 3px;
+        }
+
+        /* ==========================================================================
+           4. BARRA DE INDICADORES (PROVA SOCIAL)
+           ========================================================================== */
+        .stats-bar {
+            background-color: var(--navy-primary);
+            border-top: 3px solid var(--gold-primary);
+            padding: 35px 0;
+            color: var(--white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 28px;
+            color: var(--gold-primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 13px;
+            color: #A0AEC0;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================================================
+           5. SEÇÃO DE SOLUÇÕES (SERVIÇOS)
+           ========================================================================== */
+        .services {
+            padding: 90px 0;
+            background-color: var(--bg-light);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-subtitle {
+            color: var(--gold-primary);
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: var(--navy-primary);
+            font-weight: 800;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--gold-primary);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(3, 12, 56, 0.05);
+            color: var(--navy-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background-color: var(--navy-primary);
+            color: var(--gold-primary);
+        }
+
+        .service-title {
+            font-size: 20px;
+            color: var(--navy-primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            color: #4A5568;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .service-link {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-link:hover {
+            color: var(--gold-primary);
+        }
+
+        /* ==========================================================================
+           6. SOBRE NÓS & AUTORIDADE
+           ========================================================================== */
+        .about {
+            padding: 90px 0;
+            background-color: var(--white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 30px;
+            color: var(--navy-primary);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .about-text p {
+            color: #4A5568;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .about-credentials {
+            background-color: var(--bg-light);
+            border-left: 4px solid var(--gold-primary);
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .about-credentials h4 {
+            color: var(--navy-primary);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .about-credentials p {
+            margin-bottom: 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: #718096;
+        }
+
+        .about-box {
+            background-color: var(--navy-primary);
+            color: var(--white);
+            padding: 50px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .about-box::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--gold-primary);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        .about-box h3 {
+            color: var(--gold-primary);
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .about-box ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .about-box ul i {
+            color: var(--gold-primary);
+        }
+
+        /* ==========================================================================
+           7. RODAPÉ (FOOTER)
+           ========================================================================== */
+        .footer {
+            background-color: var(--navy-dark);
+            color: var(--white);
+            padding: 70px 0 30px;
+            border-top: 4px solid var(--gold-primary);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .footer-logo .pro { color: var(--white); }
+        .footer-logo .fis { color: var(--gold-primary); }
+
+        .footer-desc {
+            color: #A0AEC0;
+            font-size: 14px;
+            margin-bottom: 20px;
+            max-width: 350px;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #CBD5E0;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-primary);
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #CBD5E0;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer-contact i {
+            color: var(--gold-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 25px;
+            text-align: center;
+            color: #718096;
+            font-size: 13px;
+        }
+
+        /* ==========================================================================
+           8. WIDGET WHATSAPP FLUTUANTE
+           ========================================================================== */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 9999;
+            transition: var(--transition);
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            background-color: #20BA5A;
+        }
+
+        /* ==========================================================================
+           9. RESPONSIVIDADE (MOBILE)
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .hero-card {
+                grid-template-columns: 1fr;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none; /* Em produção adiciona-se o menu hambúrguer JS */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="profislogo.jpeg" alt="PROFIS - Proteção Fiscal">
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#solucoes" class="nav-link">Soluções</a></li>
+                    <li><a href="#sobre" class="nav-link">Sobre Nós</a></li> 
+                    <li><a href="#contato" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
+            <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20gratuito%20de%20recupera%C3%A7%C3%A3o%20de%20cr%C3%A9ditos." target="_blank" class="btn-cta">
+                <i class="fa-brands fa-whatsapp"></i> Fale Conosco
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION (ESTRUTURA INSPIRADA NA INFIS COM BG PONTE HERCÍLIO LUZ) -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-card">
+                    <!-- Bloco Esquerdo (Banner Sólido Navy) -->
+                    <div class="hero-badge-block">
+                        <span class="hero-badge-tag">GOVERNANÇA & EFICIÊNCIA</span>
+                        <h2 class="hero-badge-title">ENGENHARIA TRIBUTÁRIA PARA O SEU NEGÓCIO</h2>
+                        <p style="font-size: 14px; opacity: 0.9;">Auditoria de dados fiscais e restituição 100% administrativa para o comércio e serviços.</p>
+                    </div>
+
+                    <!-- Bloco Direito (Conteúdo Principal) -->
+                    <div class="hero-content-block">
+                        <h1 class="hero-h1">Proteção Fiscal e Recuperação de Créditos</h1>
+                        <h2 class="hero-subtitle">Restituição de impostos pagos a maior na via administrativa e inteligência estratégica em planejamento de regimes.</h2>
+                        
+                        <p class="hero-description">
+                            A complexidade tributária faz com que empresas paguem mais impostos do que deveriam, especialmente na revenda de itens monofásicos. Sem uma auditoria preventiva, surgem gargalos operacionais como:
+                        </p>
+
+                        <ul class="hero-checklist">
+                            <li><i class="fa-solid fa-check"></i> Bi-tributação indevida de PIS e COFINS no Simples Nacional</li>
+                            <li><i class="fa-solid fa-check"></i> Cadastro incorreto de NCM e CEST no sistema ERP</li>
+                            <li><i class="fa-solid fa-check"></i> Enquadramento inadequado do regime tributário (Simples vs. Presumido vs. Real)</li>
+                            <li><i class="fa-solid fa-check"></i> Acúmulo de créditos fiscais não aproveitados nos últimos 5 anos</li>
+                        </ul>
+
+                        <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Quero%20um%20diagn%C3%B3stico%20gratuito." target="_blank" class="btn-cta">
+                            Solicitar Diagnóstico Gratuito <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BARRA DE INDICADORES -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Via Administrativa</p>
+                </div>
+                <div class="stat-item">
+                    <h3>60 Meses</h3>
+                    <p>Análise de XMLs e PGDAS</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Risco Zero</h3>
+                    <p>Honorários no Êxito</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Compliance</h3>
+                    <p>Segurança Jurídica RFB</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE SERVIÇOS -->
+    <section class="services" id="solucoes">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">NOSSAS SOLUÇÕES</span>
+                <h2 class="section-title">Inteligência Fiscal Aplicada ao Seu Caixa</h2>
+            </div>
+
+            <div class="services-grid">
+                <!-- Serviço 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="service-title">Recuperação de PIS/COFINS Monofásico</h3>
+                    <p class="service-desc">Auditoria digital nos arquivos XML dos últimos 5 anos de vendas. Identificação de tributação concentrada (autopeças, farmácias, bebidas, combustíveis e GLP) com pedido de restituição direta na conta bancária via PER/DCOMP.</p>
+                    <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20gratuito%20de%20recupera%C3%A7%C3%A3o%20de%20cr%C3%A9ditos." target="_blank" class="service-link">Saber mais <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+
+                <!-- Serviço 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="service-title">Parametrização Tributária (NCM/CEST)</h3>
+                    <p class="service-desc">Saneamento e auditoria no cadastro de mercadorias do ERP do cliente. Adequação técnica das regras fiscais de entrada e saída para eliminar a cobrança duplicada em vendas futuras.</p>
+                    <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20gratuito%20de%20recupera%C3%A7%C3%A3o%20de%20cr%C3%A9ditos." target="_blank" class="service-link">Saber mais <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+
+                <!-- Serviço 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3 class="service-title">Planejamento Tributário de Regime</h3>
+                    <p class="service-desc">Estudo analítico e simulação de cenários reais comparando Simples Nacional, Lucro Presumido e Lucro Real. Direcionamento estratégico para transição segura de regime e aumento do fluxo de caixa.</p>
+                    <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20gratuito%20de%20recupera%C3%A7%C3%A3o%20de%20cr%C3%A9ditos." target="_blank" class="service-link">Saber mais <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NÓS -->
+    <section class="about" id="sobre">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <span class="section-subtitle">LIDERANÇA TÉCNICA</span>
+                    <h2>Visão Estratégica de Negócios e Rigor Técnico</h2>
+                    <p>A PROFIS Consultoria combina a visão analítica da gestão empresarial com a exatidão da engenharia tributária. Atuamos de forma preventiva e corretiva para garantir que sua empresa opere com a menor carga fiscal legalmente possível.</p>
+                    <p>Nossa atuação é estritamente administrativa, pautada pelas Instruções Normativas da Receita Federal e jurisprudência consolidada, oferecendo agilidade sem expor o negócio a litígios desnecessários.</p>
+                    
+                    <div class="about-credentials">
+                        <h4>Fernando Lima</h4>
+                        <p>Administrador (CRA-SC nº 34913) | Perito Judicial em Finanças (TJSC)</p>
+                    </div>
+                </div>
+
+                <div class="about-box">
+                    <h3>Por que escolher a PROFIS?</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-circle-check"></i> Sem custo inicial para elaboração do diagnóstico</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Processamento automatizado de dados fiscais (SaaS)</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Total sigilo das informações respaldado por NDA</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Atendimento consultivo e personalizado na Grande Florianópolis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="footer-logo">
+                        <span class="pro">PRO</span><span class="fis">FIS</span>
+                    </a>
+                    <p class="footer-desc">Especializada em Engenharia Tributária, Gestão Financeira e Recuperação Administrativa de Créditos Fiscais. Proteção e caixa para a sua empresa.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Links Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#solucoes">Recuperação Monofásica</a></li>
+                        <li><a href="#solucoes">Saneamento de NCM</a></li>
+                        <li><a href="#solucoes">Planejamento de Regime</a></li>
+                        <li><a href="#sobre">Sobre a PROFIS</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Contato & Localização</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> São José / Grande Florianópolis - SC</li>
+                        <li><i class="fa-solid fa-envelope"></i> profis.comercial@gmail.com</li>
+                        <li><i class="fa-solid fa-phone"></i> (48) 99182-3921</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 PROFIS Consultoria. Todos os direitos reservados. Atuação 100% administrativa em conformidade com as normas da Receita Federal do Brasil.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WIDGET WHATSAPP -->
+    <a href="https://wa.me/5548991823921?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20gratuito%20de%20recupera%C3%A7%C3%A3o%20de%20cr%C3%A9ditos." target="_blank" class="whatsapp-btn" title="Fale conosco pelo WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>
